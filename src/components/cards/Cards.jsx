@@ -1,15 +1,20 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Items from "./Items";
+
 import { DOMAIN_URL, API_KEY } from "../useMovieDate";
+import { useGlobalContext } from "../useMovieDate";
+import Spinner from "../Spinner";
 
 export default function Cards(props) {
+  const { loading, setLoading } = useGlobalContext();
   const [movieData, setMovieData] = useState([]);
-  const [, setApiError] = useState(null);
+  const [, setIsError] = useState({ show: "false", msg: "" });
   let { category } = props;
 
   useEffect(() => {
     async function fetchMovieData() {
+      setLoading(true);
       try {
         if (category === "trending") {
           category = "trending/movie/week";
@@ -23,17 +28,21 @@ export default function Cards(props) {
           category = "tv/popular";
         }
         const response = await axios.get(
-          `${DOMAIN_URL}movie/top_rated${API_KEY}&include_adult=false&language=en-US&page=1`
+          `${DOMAIN_URL}${category}${API_KEY}&include_adult=false&language=en-US&page=1`
         );
-        setMovieData(response.data.results);
+        if (response.data.results) {
+          setLoading(false);
+          setMovieData(response.data.results);
+        } else {
+          setIsError({ show: true, msg: response.error });
+        }
       } catch (error) {
         console.error("Error in Fetching", error);
-        setApiError(error.message);
       }
     }
 
     fetchMovieData();
   }, []);
 
-  return <Items movieData={movieData} />;
+  return <>{loading ? <Spinner /> : <Items movieData={movieData} />}</>;
 }

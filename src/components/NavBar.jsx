@@ -2,6 +2,7 @@ import { useState } from "react";
 
 export default function Navbar({ onInput }) {
   const [inp, setInp] = useState("");
+
   const handleClick = (event) => {
     if (event.key === "Enter") {
       setInp(event.target.value);
@@ -11,6 +12,7 @@ export default function Navbar({ onInput }) {
       setInp("");
     }
   };
+
   return (
     <div>
       <nav

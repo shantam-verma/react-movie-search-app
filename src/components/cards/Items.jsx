@@ -1,6 +1,7 @@
 import React from "react";
-import { IMG_URL } from "../useMovieDate";
 import defaultPoster from "../cards/default_poster.png";
+
+import { IMG_URL } from "../useMovieDate";
 import { NavLink } from "react-router-dom";
 
 export default function Items({ movieData }) {

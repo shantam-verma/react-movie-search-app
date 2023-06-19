@@ -1,15 +1,8 @@
 import { useState } from "react";
 import "./App.css";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 import Navbar from "./components/NavBar";
-
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link,
-  Routes,
-} from "react-router-dom";
 import Cards from "./components/cards/Cards";
 import Carousel from "./components/Carousel";
 import SearchedMovie from "./components/SearchedMovie";
@@ -24,6 +17,7 @@ function App() {
     setSearchedMovie(moviName);
     setIsSearched(true);
   };
+
   return (
     <Router>
       <div className="App">

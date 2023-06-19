@@ -1,11 +1,11 @@
-import axios from "axios";
-
 import React, { useEffect, useState } from "react";
+import axios from "axios";
+import Spinner from "../Spinner";
+
 import { NavLink, useParams } from "react-router-dom";
 import { useGlobalContext } from "../useMovieDate";
 import { IMG_URL } from "../useMovieDate";
 import { DOMAIN_URL, API_KEY } from "../useMovieDate";
-import Spinner from "../Spinner";
 
 export default function SingleCard() {
   const { loading, setLoading } = useGlobalContext();
@@ -20,13 +20,10 @@ export default function SingleCard() {
         setLoading(false);
         setMovieData(response.data);
       } else {
-        setIsError({
-          show: true,
-          msg: response.error,
-        });
+        setIsError({ show: true, msg: response.error });
       }
     } catch (error) {
-      console.log(error);
+      console.error("Error in Fetching", error);
     }
   };
   useEffect(() => {
