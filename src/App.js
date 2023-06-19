@@ -1,24 +1,103 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from "react";
+import "./App.css";
+
+import Navbar from "./components/NavBar";
+
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link,
+  Routes,
+} from "react-router-dom";
+import Cards from "./components/cards/Cards";
+import Carousel from "./components/Carousel";
+import SearchedMovie from "./components/SearchedMovie";
+import SingleCard from "./components/cards/SingleCard";
 
 function App() {
+  const [searchedMovie, setSearchedMovie] = useState(null);
+  const [isSearched, setIsSearched] = useState(false);
+
+  const handleInput = (name) => {
+    const moviName = encodeURIComponent(name);
+    setSearchedMovie(moviName);
+    setIsSearched(true);
+  };
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <div className="App">
+        <Navbar onInput={handleInput} />
+        <Routes>
+          {!isSearched ? (
+            <>
+              <Route
+                exact
+                key={"homePage"}
+                path="/"
+                element={
+                  <>
+                    <Carousel />
+                    <Cards category="top_rated" />
+                  </>
+                }
+              />
+              <Route
+                exact
+                key={"movies"}
+                path="/movies"
+                element={<Cards category="movies" />}
+              />
+              <Route
+                exact
+                key={"series"}
+                path="/series"
+                element={<Cards category="series" />}
+              />
+              <Route
+                exact
+                key={"upcoming"}
+                path="/upcoming"
+                element={<Cards category="upcoming" />}
+              />
+              <Route
+                exact
+                key={"trending"}
+                path="/trending"
+                element={<Cards category="trending" />}
+              />
+              <Route
+                exact
+                key={"singleMovie"}
+                path="/search/movie/:title/:id"
+                element={<SingleCard />}
+              />
+            </>
+          ) : (
+            <>
+              <Route
+                exact
+                key={"search/movie"}
+                path="/"
+                element={<SearchedMovie searchedMovie={searchedMovie} />}
+              />
+              <Route
+                exact
+                key={"singleMovie"}
+                path="/search/movie/:title/:id"
+                element={<SingleCard />}
+              />
+            </>
+          )}
+          <Route
+            exact
+            key={"singleMovie"}
+            path="/search/movie/:title/:id"
+            element={<SingleCard />}
+          />
+        </Routes>
+      </div>
+    </Router>
   );
 }
 
