@@ -1,6 +1,9 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
-export default function Navbar({ onInput }) {
+export default function Navbar({ onInput, getHistory }) {
+  const navigate = useNavigate();
+
   const [inp, setInp] = useState("");
 
   const handleClick = (event) => {
@@ -12,6 +15,10 @@ export default function Navbar({ onInput }) {
       setInp("");
     }
   };
+
+  useEffect(() => {
+    getHistory(navigate);
+  }, []);
 
   return (
     <div>
@@ -79,7 +86,7 @@ export default function Navbar({ onInput }) {
                 onChange={(e) => setInp(e.target.value)}
                 className="form-control me-5"
                 type="search"
-                placeholder="Search movie"
+                placeholder="i.e. Jurassic Park"
                 aria-label="Search"
                 onKeyDown={handleClick}
               />
