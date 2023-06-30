@@ -1,5 +1,5 @@
 import React from "react";
-import defaultPoster from "../cards/default_poster.png";
+import defaultPoster from "../../media/default_poster.png";
 
 import { IMG_URL } from "../useMovieDate";
 import { NavLink } from "react-router-dom";

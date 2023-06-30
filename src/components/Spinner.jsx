@@ -1,5 +1,5 @@
 import React from "react";
-import loader from "../loader.gif";
+import loader from "../media/loader.gif";
 
 export default function Spinner() {
   return (
